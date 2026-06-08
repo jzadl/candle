@@ -85,7 +85,7 @@ EOF
 
 The final binary lives at `src-tauri/target/release/candle` and bundles are in `src-tauri/target/release/bundle/`.
 
-> **Note:** scrcpy comes as a prebuilt Linux static binary from GitHub releases — you won't need SDL2, ffmpeg, meson, or ninja on your system.
+> **Note:** scrcpy comes as a prebuilt Linux static binary from GitHub releases, you won't need SDL2, ffmpeg, meson, or ninja on your system.
 
 ---
 
