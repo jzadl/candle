@@ -2,6 +2,7 @@
 
 A self-contained Android device toolkit with a modern desktop UI. Built with Tauri, React and FastAPI.
 
+Im so happy that i finally released this Project that i gatekeeped a long time
 ---
 
 ## Features
