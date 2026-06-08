@@ -23,12 +23,69 @@ A self-contained Android device toolkit with a modern desktop UI. Built with Tau
 ### Host (Linux x86_64)
 - Python 3.11+
 - Node.js 18+ & npm
+- Rust nightly (for Tauri) — `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+- System libraries: `sudo dnf install gcc-c++ webkit2gtk4.0-devel openssl-devel libsoup3-devel javascriptcoregtk4.0-devel` (Fedora) or equivalent for your distro
 - ADB in `$PATH` (or use the one bundled in `backend/tools/linux/`)
-- `pip install fastapi uvicorn opencv-python-headless numpy pillow`
 
 ### Device
 - USB debugging enabled
 - For Magisk patching: unlocked bootloader
+
+---
+
+## Building from Source
+
+### Quick — one-shot
+
+```bash
+git clone https://github.com/jzadl/candle.git
+cd candle
+bash scripts/install.sh
+```
+
+This installs Python deps, downloads prebuilt scrcpy, builds the PyInstaller sidecar, compiles the Tauri app, and registers a desktop entry. Run `candle` (or launch from the app menu) after it completes.
+
+### Step-by-step
+
+```bash
+# 1. Install dependencies
+pip install fastapi uvicorn opencv-python-headless numpy pillow pyinstaller
+npm install
+
+# 2. Download scrcpy binary + server (prebuilt, no system deps needed)
+curl -sL https://github.com/Genymobile/scrcpy/releases/download/v4.0/scrcpy-linux-x86_64-v4.0.tar.gz \
+  | tar xz -C /tmp && cp /tmp/scrcpy-linux-x86_64-v4.0/scrcpy backend/tools/linux/
+curl -sL https://github.com/Genymobile/scrcpy/releases/download/v4.0/scrcpy-server-v4.0 \
+  -o backend/tools/linux/scrcpy-server
+
+# 3. Build Python backend into a standalone sidecar binary
+pyinstaller main.spec
+
+# 4. Copy the sidecar where Tauri expects it
+cp dist/main src-tauri/binaries/candle-backend-x86_64-unknown-linux-gnu
+
+# 5. Build the Tauri app
+npx tauri build
+
+# 6. (Optional) Register icons and desktop entry
+size=256; dst="$HOME/.local/share/icons/hicolor/${size}x${size}/apps"
+mkdir -p "$dst" ~/.local/share/applications ~/.local/bin
+cp src-tauri/icons/128x128@2x.png "$dst/candle.png"
+ln -sf "$PWD/src-tauri/target/release/candle" ~/.local/bin/candle
+cat > ~/.local/share/applications/candle.desktop << EOF
+[Desktop Entry]
+Name=Candle
+Exec=$PWD/src-tauri/target/release/candle
+Icon=candle
+Terminal=false
+Type=Application
+Categories=Utility;
+EOF
+```
+
+The final binary is at `src-tauri/target/release/candle` and bundles are available at `src-tauri/target/release/bundle/`.
+
+> **Note:** scrcpy is downloaded as a prebuilt Linux static binary from GitHub releases — no SDL2, ffmpeg, meson, or ninja required on your system.
 
 ---
 
