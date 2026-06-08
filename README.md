@@ -23,7 +23,7 @@ A self-contained Android device toolkit with a modern desktop UI. Built with Tau
 ### Host (Linux x86_64)
 - Python 3.11+
 - Node.js 18+ & npm
-- Rust nightly (for Tauri) — `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+- Rust nightly (for Tauri): `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 - System libraries: `sudo dnf install gcc-c++ webkit2gtk4.0-devel openssl-devel libsoup3-devel javascriptcoregtk4.0-devel` (Fedora) or equivalent for your distro
 - ADB in `$PATH` (or use the one bundled in `backend/tools/linux/`)
 
@@ -43,7 +43,7 @@ cd candle
 bash scripts/install.sh
 ```
 
-This handles everything: installs Python deps, downloads scrcpy, builds the PyInstaller sidecar, compiles the Tauri app, and sets up a desktop entry. Once it's done, just run `candle` (or launch from your app menu).
+This handles everything: installs Python deps, downloads scrcpy, builds the PyInstaller sidecar, compiles the Tauri app, and sets up a desktop entry. Once it's done, just run `candle` (or launch from [...]
 
 ### Manual setup
 
@@ -140,7 +140,7 @@ npm run dev
 ## Module Details
 
 ### Boot Animation Creator
-Accepts either an `.mp4` video file or a directory of images. Feed it a video and the tool extracts frames automatically via OpenCV, resizes everything to your target resolution, and bundles it into a proper `bootanimation.zip`.
+Accepts either an `.mp4` video file or a directory of images. Feed it a video and the tool extracts frames automatically via OpenCV, resizes everything to your target resolution, and bundles it i[...]
 
 > ⚠️ **Untested.** Results can vary depending on your device and Android version.
 
@@ -150,7 +150,7 @@ adb push bootanimation.zip /data/local/bootanimation.zip
 ```
 
 ### Magisk Patcher
-Uses the native `magiskboot` binary to unpack your boot image, patch the ramdisk to embed the Magisk init stub, and repack it all back together — ready to flash.
+Uses the native `magiskboot` binary to unpack your boot image, patch the ramdisk to embed the Magisk init stub, and repack it all back together, ready to flash.
 
 > ⚠️ **Untested.** Test this on a non-production device first before you flash anything permanent.
 
