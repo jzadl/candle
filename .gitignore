@@ -1,0 +1,16 @@
+node_modules/
+src-tauri/target/
+src-tauri/gen/
+src-tauri/binaries/
+dist/
+build/
+__pycache__/
+*.pyc
+.vscode/
+scratch/
+Cargo.lock
+package-lock.json
+backend/tools/linux/adb
+backend/tools/linux/magiskboot
+backend/tools/linux/scrcpy
+backend/tools/linux/scrcpy-server
